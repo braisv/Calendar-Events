@@ -1,0 +1,23 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "app.js",
+  "repository": "https://github.com/braisv/Calendar-Events",
+  "author": "braisv",
+  "license": "MIT",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "DEBUG=server:* nodemon .app.js",
+    "dev-windows": "nodemon ./bin/www"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "connect-flash": "^0.1.1",
+    "connect-mongo": "^3.2.0",
+    "cookie-parser": "^1.4.4",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "mongoose": "^5.9.2"
+  }
+}
