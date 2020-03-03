@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
-require("dotenv").config();
+// require("dotenv").config();
 
 mongoose
-  .connect(process.env.MONGODB, {useNewUrlParser: true})
+  .connect("mongodb://localhost/calendar", {useNewUrlParser: true})
   .then(x => {
     console.log(`Connected to Mongo! Database name: "Calendar Events DB"`)
   })

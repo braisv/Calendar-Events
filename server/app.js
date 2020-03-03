@@ -14,6 +14,7 @@ const port          = 5000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+require("./configs/mongoose");
 
 app.locals.title = 'Calendar Events Backend';
 
