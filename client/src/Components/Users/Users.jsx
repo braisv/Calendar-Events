@@ -12,17 +12,14 @@ const Users = () => {
     const [remove, setRemove] = useState(false);
     const [add, setAdd] = useState(false);
 
-    console.log("USERS: ", users)
-    console.log("SERVICE RESPONSE: ", service.getUsers())
-
     useEffect(() => {
-        setUsers(service.getUsers())
+        service.getUsers().then(data => setUsers(data))
     }, [])
 
     const closeForms = () => {
         setAdd(false)
         setEdit(false)
-        service.getUsers()
+        service.getUsers().then(data => setUsers(data))
       }
 
     return (
@@ -32,7 +29,7 @@ const Users = () => {
                 <Button type="Add" onClick={() => setAdd(!add)} />
                 <Button type="Edit" onClick={() => setEdit(!edit)} />
                 <Button type="Remove" onClick={() => setRemove(!remove)} />
-                {add ? <EditUser addedUser={closeForms} /> : ""}
+                {add ? <EditUser closeForms={() => closeForms()} /> : ""}
                 <ul>
                     {users[0] ? users.map(user => (
                         <li>{user.name}</li>

@@ -20,7 +20,6 @@ export default class UserService {
   };
 
   newUser = name => {
-    console.log("NEW USER SERVICE: ", name)
     return this.service
       .post(`/newUser`, { name })
       .then(response => response.data);
