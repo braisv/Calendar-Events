@@ -8,7 +8,7 @@ usersRouter.get('/users', (req, res, next) => {
     .catch(err => console.log(err))
   })
 
-  usersRouter.post('/new', (req, res, next) => {
+  usersRouter.post('/newUser', (req, res, next) => {
     const { name } = req.body;
     User
       .create({ name })

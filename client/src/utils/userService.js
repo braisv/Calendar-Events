@@ -9,38 +9,20 @@ export default class UserService {
   }
 
 
-  getAll = () => {
+  getUsers = () => {
     return this.service.get(`/users`).then(response => response.data);
   };
 
-  getOne = id => {
+  getUser = id => {
     return this.service
-      .get(`/restaurant/${id}`)
+      .get(`/user/${id}`)
       .then(response => response.data);
   };
 
-  newRestaurant = (
-    name,
-    neighborhood,
-    photograph,
-    location,
-    image,
-    cuisine_type,
-    timetable,
-    reviews
-  ) => {
-    console.log("SERVICE")
+  newUser = name => {
+    console.log("NEW USER SERVICE: ", name)
     return this.service
-      .post(`/new`, {
-        name,
-        neighborhood,
-        photograph,
-        location,
-        image,
-        cuisine_type,
-        timetable,
-        reviews
-      })
+      .post(`/newUser`, { name })
       .then(response => response.data);
   };
 
