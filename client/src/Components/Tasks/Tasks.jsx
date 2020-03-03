@@ -1,72 +1,72 @@
 import React, { useState, useEffect } from "react";
-import UserService from "../../utils/userService";
+import TaskService from "../../utils/taskService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import "./Users.scss";
+import "./Tasks.scss";
 import Button from "../Buttons/Button";
-import EditUser from "./EditUser";
+import EditTask from "./EditTask";
 
-const service = new UserService();
+const service = new TaskService();
 
-const Users = () => {
+const Tasks = () => {
   const [search, setSearch] = useState("");
-  const [users, setUsers] = useState([]);
+  const [tasks, setTasks] = useState([]);
   const [edit, setEdit] = useState(false);
   const [remove, setRemove] = useState(false);
   const [add, setAdd] = useState(false);
 
   useEffect(() => {
-    service.getUsers().then(data => setUsers(data));
+    service.getTasks().then(data => setTasks(data));
   }, []);
 
   const closeForms = () => {
     setAdd(false);
-    service.getUsers().then(data => setUsers(data));
+    service.getTasks().then(data => setTasks(data));
   };
 
-  const deleteUser = id => {
-    service.removeUser(id).then( () => service.getUsers().then(data => setUsers(data)));
+  const deleteTask = id => {
+    service.removeTask(id).then( () => service.getTasks().then(data => setTasks(data)));
   }
 
-  let filteredUsers;
+  let filteredTasks;
 
-  filteredUsers = users.filter(el =>
+  filteredTasks = tasks.filter(el =>
     el.name.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
-    <div className="user-options">
-      <div className="list-users">
-        <h1>USERS</h1>
+    <div className="task-options">
+      <div className="list-tasks">
+        <h1>TASKS</h1>
         <input
           type="text"
           name="searchbar"
-          placeholder="Search users by name"
+          placeholder="Search tasks by name"
           className="searchbar"
           onChange={e => setSearch(e.target.value)}
         />
-        <div className="user-actions flex">
+        <div className="task-actions flex">
           <Button type="Add" onClick={() => setAdd(!add)} />
           <Button type="Edit" onClick={() => setEdit(!edit)} />
           <Button type="Remove" onClick={() => setRemove(!remove)} />
         </div>
-        {add ? <EditUser user="false" closeForms={() => closeForms()} /> : ""}
+        {add ? <EditTask task="false" closeForms={() => closeForms()} /> : ""}
         <ul>
-          {users[0]
-            ? filteredUsers.map(user =>
+          {tasks[0]
+            ? filteredTasks.map(task =>
                 edit ? (
                   <li>
-                    <EditUser user={user} closeForms={() => closeForms()} />
+                    <EditTask task={task} closeForms={() => closeForms()} />
                   </li>
                 ) : (
                   <li className="list-item">
-                    {user.name}
+                    {task.title}
                     <div className="action-icons">
                       {remove ? (
                         <FontAwesomeIcon
                           icon={faTrash}
                           size="1x"
-                          onClick={() => deleteUser(user.id)}
+                          onClick={() => deleteTask(task.id)}
                         />
                       ) : (
                         ""
@@ -75,11 +75,11 @@ const Users = () => {
                   </li>
                 )
               )
-            : <li className="list-item">No users</li>}
+            : <li className="list-item">No tasks</li>}
         </ul>
       </div>
     </div>
   );
 };
 
-export default Users;
+export default Tasks;

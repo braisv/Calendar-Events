@@ -1,0 +1,70 @@
+@import "../../utils/styles.scss";
+
+.task-options {
+  width: 20%;
+  min-width: 350px;
+  min-height: 40%;
+  background: whitesmoke;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  margin: 10px;
+
+  h1 {
+    background: $blue;
+    color: $dark-blue;
+    text-align: center;
+  }
+
+  .searchbar {
+    width: 100%;
+    padding: 10px 15px;
+    margin: 5px 0;
+  }
+
+  .task-actions {
+    background: $blue;
+    padding: 10px 0;
+  }
+
+  .edit-task {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 10px 15px;
+    background: $dark-blue;
+
+    div {
+      width: 80%;
+
+      label {
+        text-transform: uppercase;
+        font-weight: bold;
+        color: whitesmoke;
+      }
+
+      input {
+        width: fit-content;
+        margin: 0 15px;
+        padding: 5px 10px;
+        outline: none;
+      }
+    }
+  }
+
+  li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+  }
+
+  .list-item {
+      background: $dark-blue;
+      color: white;
+      font-weight: bold;
+      font-size: 1.2rem;
+      padding: 5px 15px;
+  }
+}
