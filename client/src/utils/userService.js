@@ -25,34 +25,15 @@ export default class UserService {
       .then(response => response.data);
   };
 
-  removeRestaurant = (id) => {
+  removeUser = (id) => {
     return this.service
       .post(`/remove/${id}`)
       .then(response => response.data);
   };
 
-  editRestaurant = (
-    id,
-    name,
-    neighborhood,
-    photograph,
-    location,
-    image,
-    cuisine_type,
-    timetable,
-    reviews
-  ) => {
+  updateUser = (id, name) => {
     return this.service
-      .post(`/edit/${id}`, {
-        name,
-        neighborhood,
-        photograph,
-        location,
-        image,
-        cuisine_type,
-        timetable,
-        reviews
-      })
+      .post(`/edit/${id}`, {name})
       .then(response => response.data);
   };
 }
