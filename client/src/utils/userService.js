@@ -26,15 +26,14 @@ export default class UserService {
   };
 
   removeUser = (id) => {
-    console.log("USER TO REMOVE ID: ", id)
     return this.service
-      .post(`/remove/${id}`)
+      .delete(`/remove/${id}`)
       .then(response => response.data);
   };
 
   updateUser = (id, name) => {
     return this.service
-      .post(`/edit/${id}`, {name})
+      .patch(`/edit/${id}`, {name})
       .then(response => response.data);
   };
 }

@@ -25,8 +25,7 @@ const Users = () => {
   };
 
   const deleteUser = id => {
-    service.removeUser(id)
-    service.getUsers().then(data => setUsers(data));
+    service.removeUser(id).then( () => service.getUsers().then(data => setUsers(data)));
   }
 
   let filteredUsers;

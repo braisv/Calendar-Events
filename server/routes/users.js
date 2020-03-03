@@ -29,7 +29,7 @@ usersRouter.get('/users', (req, res, next) => {
       .catch(error => next(error))
   });
   
-  usersRouter.post('/remove/:id', (req, res, next) => {
+  usersRouter.delete('/remove/:id', (req, res, next) => {
     const userID = req.params.id
     User
       .findByIdAndRemove({ _id : userID })
@@ -39,7 +39,7 @@ usersRouter.get('/users', (req, res, next) => {
       .catch(error => next(error))
   });
   
-  usersRouter.post('/edit/:id', (req, res, next) => {
+  usersRouter.patch('/edit/:id', (req, res, next) => {
       const { name } = req.body;
       const userID = req.params.id
     User
