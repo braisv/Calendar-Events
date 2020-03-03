@@ -7,18 +7,6 @@ const service = new UserService();
 
 const EditUser = ({ closeForms, userId }) => {
   const [name, setName] = useState("");
-  const [id, setId] = useState(false)
-
-  useEffect(() => {
-    service
-      .getUser(userId)
-      .then(data => {
-        setId(data);
-      })
-      .catch(e => console.log(e));
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const addUser = name => {
     service.newUser(name).then(() => closeForms());
@@ -30,9 +18,9 @@ const EditUser = ({ closeForms, userId }) => {
 
   return (
     <div>
-      {id ? <h1>Update User:</h1> : <h1>New User:</h1>}
+      {userId ? <h1>Update User:</h1> : <h1>New User:</h1>}
       <TextInput state={name} setState={setName} type="text" field="name" />
-      {id ? (
+      {userId ? (
         <Button type="Update User" onClick={() => updateUser(userId, name)} />
       ) : (
         <Button type="Add User" onClick={() => addUser(name)} />

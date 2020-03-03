@@ -21,4 +21,31 @@ usersRouter.get('/users', (req, res, next) => {
       .catch(error => next(error))
   });
 
+  usersRouter.get('/user/:id', (req, res, next) => {
+    const userID = req.params.id
+    User
+      .findById(userID)
+      .then(user => res.json(user))
+      .catch(error => next(error))
+  });
+  
+  usersRouter.post('/remove/:id', (req, res, next) => {
+    const userID = req.params.id
+    User
+      .findByIdAndRemove({ _id : userID })
+      .then(theUser => {
+        res.json(theUser)
+      })
+      .catch(error => next(error))
+  });
+  
+  usersRouter.post('/edit/:id', (req, res, next) => {
+      const { name } = req.body;
+      const userID = req.params.id
+    User
+      .findByIdAndUpdate({ _id: userID }, { $set: { name }}, { new: true })
+      .then(theUser => res.json(theUser))
+      .catch(error => next(error))
+  });
+
 module.exports = usersRouter;

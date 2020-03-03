@@ -26,6 +26,7 @@ export default class UserService {
   };
 
   removeUser = (id) => {
+    console.log("USER TO REMOVE ID: ", id)
     return this.service
       .post(`/remove/${id}`)
       .then(response => response.data);

@@ -14,6 +14,7 @@ const Users = () => {
   const [edit, setEdit] = useState(false);
   const [remove, setRemove] = useState(false);
   const [add, setAdd] = useState(false);
+  const [editForm, setEditForm] = useState(false);
 
   useEffect(() => {
     service.getUsers().then(data => setUsers(data));
@@ -22,11 +23,8 @@ const Users = () => {
   const closeForms = () => {
     setAdd(false);
     setEdit(false);
+    editForm = false;
     service.getUsers().then(data => setUsers(data));
-  };
-
-  const editUser = id => {
-    return <EditUser userId={id} closeForms={() => closeForms()} />;
   };
 
   let filteredUsers;
@@ -59,7 +57,7 @@ const Users = () => {
                     {edit ? (
                       <FontAwesomeIcon
                         icon={faPen}
-                        onClick={() => editUser(user.id)}
+                        onClick={() => setEditForm(!editForm)}
                         size="2x"
                       />
                     ) : (
@@ -74,6 +72,9 @@ const Users = () => {
                     ) : (
                       ""
                     )}
+                  </div>
+                  <div>
+                  {editForm ? <EditUser userId={user.id} closeForms={() => closeForms()} /> : ""}
                   </div>
                 </li>
               ))
