@@ -20,4 +20,8 @@
   border-bottom: 1px solid lightgray;
   background: white;
   }
+
+  li {
+      list-style: none;
+  }
   

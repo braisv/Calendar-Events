@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import UserService from "../../utils/userService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faPen } from "@fortawesome/free-solid-svg-icons";
-import "./Users.css";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import "./Users.scss";
 import Button from "../Buttons/Button";
 import EditUser from "./EditUser";
 
@@ -14,7 +14,6 @@ const Users = () => {
   const [edit, setEdit] = useState(false);
   const [remove, setRemove] = useState(false);
   const [add, setAdd] = useState(false);
-  const [editForm, setEditForm] = useState(false);
 
   useEffect(() => {
     service.getUsers().then(data => setUsers(data));
@@ -22,10 +21,13 @@ const Users = () => {
 
   const closeForms = () => {
     setAdd(false);
-    setEdit(false);
-    editForm = false;
     service.getUsers().then(data => setUsers(data));
   };
+
+  const deleteUser = id => {
+    service.removeUser(id)
+    service.getUsers().then(data => setUsers(data));
+  }
 
   let filteredUsers;
 
@@ -44,41 +46,37 @@ const Users = () => {
           className="searchbar"
           onChange={e => setSearch(e.target.value)}
         />
-        <Button type="Add" onClick={() => setAdd(!add)} />
-        <Button type="Edit" onClick={() => setEdit(!edit)} />
-        <Button type="Remove" onClick={() => setRemove(!remove)} />
-        {add ? <EditUser closeForms={() => closeForms()} /> : ""}
+        <div className="user-actions flex">
+          <Button type="Add" onClick={() => setAdd(!add)} />
+          <Button type="Edit" onClick={() => setEdit(!edit)} />
+          <Button type="Remove" onClick={() => setRemove(!remove)} />
+        </div>
+        {add ? <EditUser user="false" closeForms={() => closeForms()} /> : ""}
         <ul>
           {users[0]
-            ? filteredUsers.map(user => (
-                <li>
-                  {user.name}
-                  <div className="action-icons">
-                    {edit ? (
-                      <FontAwesomeIcon
-                        icon={faPen}
-                        onClick={() => setEditForm(!editForm)}
-                        size="2x"
-                      />
-                    ) : (
-                      ""
-                    )}
-                    {remove ? (
-                      <FontAwesomeIcon
-                        icon={faTrash}
-                        size="2x"
-                        onClick={() => service.removeUser(user.id)}
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </div>
-                  <div>
-                  {editForm ? <EditUser userId={user.id} closeForms={() => closeForms()} /> : ""}
-                  </div>
-                </li>
-              ))
-            : ""}
+            ? filteredUsers.map(user =>
+                edit ? (
+                  <li>
+                    <EditUser user={user} closeForms={() => closeForms()} />
+                  </li>
+                ) : (
+                  <li className="list-item">
+                    {user.name}
+                    <div className="action-icons">
+                      {remove ? (
+                        <FontAwesomeIcon
+                          icon={faTrash}
+                          size="1x"
+                          onClick={() => deleteUser(user.id)}
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  </li>
+                )
+              )
+            : "No users"}
         </ul>
       </div>
     </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import * as dateFns from "date-fns";
 
 const Days = ({ currentDate }) => {
-    const dateFormat = "eeee";
+    const dateFormat = "eee";
     const days = [];
     let startDate = dateFns.startOfWeek(currentDate);
     for (let i = 0; i < 7; i++) {

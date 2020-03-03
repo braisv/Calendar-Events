@@ -3,7 +3,7 @@
     color: $color;
     transition: color $duration $duration/3;
     position: relative;
-    margin-right: 10px;
+    margin: 0 10px;
     
     &::before,
     &::after {
@@ -50,15 +50,17 @@
   }
   
   .draw-border {
-    @include btn-border-drawing(#3a3131, #993f3f, 4px, bottom, right);
+    @include btn-border-drawing(#f5f5f5, #865353, 4px, bottom, right);
   }
   
   .btn {
     background: none;
     border: none;
     cursor: pointer;
-    line-height: 1.5;
-    padding: 1em 2em;
+    font-size: 1rem;
+    font-weight: bold;
+    line-height: 0.1;
+    padding: 1em;
     letter-spacing: 0.05rem;
     
     &:focus { outline: 2px dotted #55d7dc; }
