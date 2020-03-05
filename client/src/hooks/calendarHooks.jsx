@@ -1,6 +1,11 @@
 import { useContext } from "react";
 import { CalendarContext } from "../Components/CalendarContext";
 import * as dateFns from "date-fns";
+import UserService from '../utils/userService';
+import TaskService from '../utils/taskService';
+
+const userService = new UserService();
+const taskService = new TaskService();
 
 const useCalendarHooks = () => {
   const [state, setState] = useContext(CalendarContext);
@@ -23,10 +28,30 @@ const useCalendarHooks = () => {
     setState({ ...state, selectedDate: day });
   };
 
+  const setUsers = () => {
+    userService.getUsers().then(data => setState({ ...state, users: data }));
+  }
+
+  const deleteUser = id => {
+    userService.removeUser(id).then( () => setUsers());
+  }
+
+  const setTasks = () => {
+    taskService.getTasks().then(data => setState({ ...state, tasks: data }));
+  }
+
+  const deleteTask = id => {
+    taskService.removeTask(id).then( () => setTasks());
+  }
+
   return {
     nextMonth,
     prevMonth,
-    onDateClick
+    onDateClick,
+    setUsers,
+    deleteUser,
+    setTasks,
+    deleteTask
   };
 };
 

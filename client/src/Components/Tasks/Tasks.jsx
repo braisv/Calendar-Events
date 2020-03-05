@@ -1,50 +1,36 @@
-import React, { useState, useEffect } from "react";
-import TaskService from "../../utils/taskService";
+import React, { useState, useEffect, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import "./Tasks.scss";
 import Button from "../Buttons/Button";
 import EditTask from "./EditTask";
-
-const service = new TaskService();
+import { CalendarContext } from '../CalendarContext';
+import useCalendarHooks from '../../hooks/calendarHooks';
+import * as dateFns from "date-fns";
 
 const Tasks = () => {
-  const [search, setSearch] = useState("");
-  const [tasks, setTasks] = useState([]);
+  const { setTasks, deleteTask } = useCalendarHooks();
+  const [state] = useContext(CalendarContext);
   const [edit, setEdit] = useState(false);
   const [remove, setRemove] = useState(false);
   const [add, setAdd] = useState(false);
 
   useEffect(() => {
-    service.getTasks().then(data => setTasks(data));
+    setTasks();
   }, []);
 
   const closeForms = () => {
     setAdd(false);
-    service.getTasks().then(data => setTasks(data));
+    setTasks();
   };
 
-  const deleteTask = id => {
-    service.removeTask(id).then( () => service.getTasks().then(data => setTasks(data)));
-  }
-
-  let filteredTasks;
-
-  filteredTasks = tasks.filter(el =>
-    el.name.toLowerCase().includes(search.toLowerCase())
-  );
+  console.log(dateFns.format(state.selectedDate, "PPP"))
 
   return (
     <div className="task-options">
       <div className="list-tasks">
         <h1>TASKS</h1>
-        <input
-          type="text"
-          name="searchbar"
-          placeholder="Search tasks by name"
-          className="searchbar"
-          onChange={e => setSearch(e.target.value)}
-        />
+<h2>{dateFns.format(state.selectedDate, "PPP")}</h2>
         <div className="task-actions flex">
           <Button type="Add" onClick={() => setAdd(!add)} />
           <Button type="Edit" onClick={() => setEdit(!edit)} />
@@ -52,8 +38,8 @@ const Tasks = () => {
         </div>
         {add ? <EditTask task="false" closeForms={() => closeForms()} /> : ""}
         <ul>
-          {tasks[0]
-            ? filteredTasks.map(task =>
+          {state.tasks[0]
+            ? state.tasks.map(task =>
                 edit ? (
                   <li>
                     <EditTask task={task} closeForms={() => closeForms()} />

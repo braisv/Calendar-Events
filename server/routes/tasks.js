@@ -21,4 +21,14 @@ const Task = require("../models/Task")
       .catch(error => next(error))
   });
 
+  tasksRouter.delete('/remove/:id', (req, res, next) => {
+    const taskID = req.params.id
+    task
+      .findByIdAndRemove({ _id : taskID })
+      .then(theTask => {
+        res.json(theTask)
+      })
+      .catch(error => next(error))
+  });
+
 module.exports = tasksRouter;

@@ -1,36 +1,34 @@
-import React, { useState, useEffect } from "react";
-import UserService from "../../utils/userService";
+import React, { useState, useEffect, useContext } from "react";
+import { CalendarContext } from '../CalendarContext';
+import useCalendarHooks from '../../hooks/calendarHooks';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import "./Users.scss";
 import Button from "../Buttons/Button";
 import EditUser from "./EditUser";
 
-const service = new UserService();
+
 
 const Users = () => {
+  const { setUsers, deleteUser } = useCalendarHooks();
   const [search, setSearch] = useState("");
-  const [users, setUsers] = useState([]);
+  const [state] = useContext(CalendarContext);
   const [edit, setEdit] = useState(false);
   const [remove, setRemove] = useState(false);
   const [add, setAdd] = useState(false);
 
   useEffect(() => {
-    service.getUsers().then(data => setUsers(data));
+    setUsers();
   }, []);
 
   const closeForms = () => {
     setAdd(false);
-    service.getUsers().then(data => setUsers(data));
+    setUsers();
   };
-
-  const deleteUser = id => {
-    service.removeUser(id).then( () => service.getUsers().then(data => setUsers(data)));
-  }
 
   let filteredUsers;
 
-  filteredUsers = users.filter(el =>
+  filteredUsers = state.users.filter(el =>
     el.name.toLowerCase().includes(search.toLowerCase())
   );
 
@@ -52,7 +50,7 @@ const Users = () => {
         </div>
         {add ? <EditUser user="false" closeForms={() => closeForms()} /> : ""}
         <ul>
-          {users[0]
+          {state.users[0]
             ? filteredUsers.map(user =>
                 edit ? (
                   <li>
