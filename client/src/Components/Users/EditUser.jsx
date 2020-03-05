@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import UserService from "../../utils/userService";
 import TextInput from "../Inputs/TextInput";
-import Button from "../Buttons/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPlus, faPen } from "@fortawesome/free-solid-svg-icons";
 

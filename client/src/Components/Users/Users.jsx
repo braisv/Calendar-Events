@@ -10,7 +10,7 @@ import EditUser from "./EditUser";
 
 
 const Users = () => {
-  const { setUsers, deleteUser } = useCalendarHooks();
+  const { setUsers, deleteUser, getData } = useCalendarHooks();
   const [search, setSearch] = useState("");
   const [state] = useContext(CalendarContext);
   const [edit, setEdit] = useState(false);
@@ -18,7 +18,8 @@ const Users = () => {
   const [add, setAdd] = useState(false);
 
   useEffect(() => {
-    setUsers();
+    getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const closeForms = () => {
@@ -31,6 +32,10 @@ const Users = () => {
   filteredUsers = state.users.filter(el =>
     el.name.toLowerCase().includes(search.toLowerCase())
   );
+
+
+
+  
 
   return (
     <div className="user-options">
@@ -51,13 +56,13 @@ const Users = () => {
         {add ? <EditUser user="false" closeForms={() => closeForms()} /> : ""}
         <ul>
           {state.users[0]
-            ? filteredUsers.map(user =>
+            ? filteredUsers.map( (user, i) =>
                 edit ? (
-                  <li>
+                  <li key={i}>
                     <EditUser user={user} closeForms={() => closeForms()} />
                   </li>
                 ) : (
-                  <li className="list-item">
+                  <li className="list-item" key={i}>
                     {user.name}
                     <div className="action-icons">
                       {remove ? (

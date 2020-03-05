@@ -5,8 +5,6 @@ import { CalendarContext } from '../CalendarContext';
 const Days = () => {
   const [state] = useContext(CalendarContext);
 
-  console.log("STATE: ", state)
-
   const dateFormat = "eee";
   const days = [];
   let startDate = dateFns.startOfWeek(state.currentDate);

@@ -9,10 +9,10 @@ const taskSchema = new Schema(
     },
     description: String,
     date: Date,
-    user: [{
+    user: {
         type: Schema.Types.ObjectId,
         ref: "User"
-      }],
+      },
   },
   {
     timestamps: true,

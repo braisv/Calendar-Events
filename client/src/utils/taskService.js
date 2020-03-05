@@ -8,6 +8,9 @@ export default class TaskService {
     });
   }
 
+  fetchData = () => {
+    return this.service.get(`/data`).then(response => response.data);
+  };
 
   getTasks = () => {
     return this.service.get(`/tasks`).then(response => response.data);
@@ -19,9 +22,9 @@ export default class TaskService {
       .then(response => response.data);
   };
 
-  newTask = title => {
+  newTask = (title, description, user, date) => {
     return this.service
-      .post(`/newTask`, { title })
+      .post(`/newTask`, { title, description, user, date })
       .then(response => response.data);
   };
 
@@ -31,9 +34,9 @@ export default class TaskService {
       .then(response => response.data);
   };
 
-  updateTask = (id, title) => {
+  updateTask = (id, title, description, user, date) => {
     return this.service
-      .patch(`/edit/${id}`, {title})
+      .patch(`/edit/${id}`, {title, description, user, date})
       .then(response => response.data);
   };
 }

@@ -28,6 +28,10 @@ const useCalendarHooks = () => {
     setState({ ...state, selectedDate: day });
   };
 
+  const getData = () => {
+    taskService.fetchData().then(data => setState({ ...state, users: data.users, tasks: data.tasks }));
+  }
+
   const setUsers = () => {
     userService.getUsers().then(data => setState({ ...state, users: data }));
   }
@@ -51,7 +55,8 @@ const useCalendarHooks = () => {
     setUsers,
     deleteUser,
     setTasks,
-    deleteTask
+    deleteTask,
+    getData
   };
 };
 
