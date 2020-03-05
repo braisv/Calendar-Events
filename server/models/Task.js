@@ -8,7 +8,7 @@ const taskSchema = new Schema(
       unique: true
     },
     description: String,
-    date: String,
+    date: Date,
     user: [{
         type: Schema.Types.ObjectId,
         ref: "User"

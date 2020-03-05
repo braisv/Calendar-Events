@@ -4,20 +4,17 @@ import Header from "./header";
 import Days from "./days";
 import Cells from "./cells";
 
-const Calendar = () => {
-  const [currentDate, setCurrentDate] = useState(new Date());
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  
+const Calendar = () => {  
   return (
     <div className="calendar">
       <div>
-        <Header currentDate={currentDate} setCurrentDate={setCurrentDate} />
+        <Header />
       </div>
       <div>
-        <Days currentDate={currentDate} />
+        <Days />
       </div>
       <div>
-        <Cells currentDate={currentDate} setSelectedDate={setSelectedDate} selectedDate={selectedDate} />
+        <Cells />
       </div>
     </div>
   );

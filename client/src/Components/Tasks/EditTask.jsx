@@ -1,43 +1,43 @@
 import React, { useState, useEffect } from "react";
-import UserService from "../../utils/userService";
+import TaskService from "../../utils/taskService";
 import TextInput from "../Inputs/TextInput";
 import Button from "../Buttons/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserPlus, faPen } from "@fortawesome/free-solid-svg-icons";
+import { faTasks, faPen } from "@fortawesome/free-solid-svg-icons";
 
-const service = new UserService();
+const service = new TaskService();
 
-const EditUser = ({ closeForms, user }) => {
-  const [name, setName] = useState("");
+const EditTask = ({ closeForms, task }) => {
+  const [title, setTitle] = useState("");
 
   useEffect(() => {
-    user.id ? setName(user.name) : setName("");
+    task.id ? setTitle(task.title) : setTitle("");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const addUser = name => {
-    service.newUser(name).then(() => closeForms());
+  const addTask = title => {
+    service.newTask(title).then(() => closeForms());
   };
 
-  const updateUser = (id, name) => {
-    service.updateUser(id, name).then(() => closeForms());
+  const updateTask = (id, title) => {
+    service.updateTask(id, title).then(() => closeForms());
   };
 
   return (
-    <div className="edit-user">
-      <TextInput state={name} setState={setName} type="text" field="name" />
-      {user.id ? (
+    <div className="edit-task">
+      <TextInput state={title} setState={setTitle} type="text" field="title" />
+      {task.id ? (
         <FontAwesomeIcon
           icon={faPen}
-          onClick={() => updateUser(user.id, name)}
+          onClick={() => updateTask(task.id, title)}
           size="2x"
           color="whitesmoke"
         />
       ) : (
-        <FontAwesomeIcon icon={faUserPlus} onClick={() => addUser(name)} size="2x" color="whitesmoke" />
+        <FontAwesomeIcon icon={faTasks} onClick={() => addTask(title)} size="2x" color="whitesmoke" />
       )}
     </div>
   );
 };
 
-export default EditUser;
+export default EditTask;

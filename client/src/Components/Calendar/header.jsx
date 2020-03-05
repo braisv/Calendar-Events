@@ -1,16 +1,12 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import * as dateFns from "date-fns";
+import { CalendarContext } from '../CalendarContext';
+import useCalendarHooks from '../../hooks/calendarHooks';
 
-const Header = ({ currentDate, setCurrentDate }) => {
+const Header = () => {
     const dateFormat = "MMMM yyyy";
-
-    const nextMonth = () => {
-        setCurrentDate(dateFns.addMonths(currentDate, 1));
-      };
-      
-      const prevMonth = () => {
-        setCurrentDate(dateFns.subMonths(currentDate, 1));
-      };
+    const [state] = useContext(CalendarContext);
+    const { prevMonth, nextMonth } = useCalendarHooks();
 
     return (
       <div className="header row flex-middle">
@@ -20,7 +16,7 @@ const Header = ({ currentDate, setCurrentDate }) => {
           </div>
         </div>
         <div className="column col-center">
-          <span>{dateFns.format(currentDate, dateFormat)}</span>
+          <span>{dateFns.format(state.currentDate, dateFormat)}</span>
         </div>
         <div className="column col-end">
           <div className="icon" onClick={nextMonth}>
