@@ -11,12 +11,11 @@ const service = new TaskService();
 const EditTask = ({ closeForms, task }) => {
   const [state] = useContext(CalendarContext);
   const [title, setTitle] = useState("");
-  const [userTask, setUserTask] = useState(state.users[0].id);
+  const [userTask, setUserTask] = useState(state.users[0] ? state.users[0].id : "No User");
 
   useEffect(() => {
-    if (task.id) {
+    if (task) {
       setTitle(task.title);
-      setUserTask(task.userTask);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -35,6 +34,8 @@ const EditTask = ({ closeForms, task }) => {
     e.preventDefault();
     setUserTask(e.target.value)
   };
+
+  console.log(userTask)
 
   return (
     <div className="edit-task">
