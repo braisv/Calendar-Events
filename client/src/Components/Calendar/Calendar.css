@@ -132,6 +132,17 @@ right: -.05em;
 transition: .25s ease-out;
 letter-spacing: -.07em;
 }
+.calendar .body .cell .task-number {
+    font-weight: 700;
+    line-height: 1;
+    color: rgb(119, 177, 207);
+    font-size: 1.4em;
+    position: absolute;
+    top: 3em;
+    right: 0.2em;
+    transition: .25s ease-out;
+    letter-spacing: -.07em;
+    }
 .calendar .body .cell:hover .bg, .calendar .body .selected .bg  {
 opacity: 0.2;
 transition: .5s ease-in;

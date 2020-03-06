@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import "./Tasks.scss";
@@ -9,7 +9,7 @@ import useCalendarHooks from "../../hooks/calendarHooks";
 import * as dateFns from "date-fns";
 
 const Tasks = () => {
-  const { setTasks, deleteTask } = useCalendarHooks();
+  const { getData, deleteTask } = useCalendarHooks();
   const [state] = useContext(CalendarContext);
   const [edit, setEdit] = useState(false);
   const [remove, setRemove] = useState(false);
@@ -17,8 +17,24 @@ const Tasks = () => {
 
   const closeForms = () => {
     setAdd(false);
-    setTasks();
+    getData();
   };
+
+  useEffect(() => {
+    getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  let filteredTasks;
+
+  state.tasks.map(task => {
+    if (!task.user) deleteTask(task.id)
+    return ""
+  })
+
+  filteredTasks = state.tasks.filter(task =>
+    task.date === dateFns.format(state.selectedDate, "PPP")
+  );
 
   return (
     <div className="task-options">
@@ -33,13 +49,14 @@ const Tasks = () => {
         {add ? <EditTask task="false" closeForms={() => closeForms()} /> : ""}
         <ul>
           {state.tasks[0] ? (
-            state.tasks.map( (task, i) =>
+            filteredTasks.map((task, i) =>
               edit ? (
                 <li key={i}>
                   <EditTask task={task} closeForms={() => closeForms()} />
                 </li>
               ) : (
-                <li className="list-item"  key={i}>
+                <li className="list-item" key={i}>
+                  <span className="user-task">{!!task.user ? task.user.name : deleteTask(task.id)}</span>
                   {task.title}
                   <div className="action-icons">
                     {remove ? (

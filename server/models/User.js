@@ -6,11 +6,7 @@ const userSchema = new Schema(
     name: {
       type: String,
       unique: true
-    },
-    tasks: [{
-        type: Schema.Types.ObjectId,
-        ref: "Task"
-      }],
+    }
   },
   {
     timestamps: true,

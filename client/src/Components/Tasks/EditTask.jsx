@@ -4,55 +4,46 @@ import TaskService from "../../utils/taskService";
 import TextInput from "../Inputs/TextInput";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTasks, faPen } from "@fortawesome/free-solid-svg-icons";
+import * as dateFns from "date-fns";
 
 const service = new TaskService();
 
 const EditTask = ({ closeForms, task }) => {
   const [state] = useContext(CalendarContext);
   const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [userTask, setUserTask] = useState({});
+  const [userTask, setUserTask] = useState(state.users[0].id);
 
   useEffect(() => {
     if (task.id) {
       setTitle(task.title);
-      setDescription(task.description);
       setUserTask(task.userTask);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const addTask = (title, description, user, date) => {
-    service.newTask(title, description, user, date).then(() => closeForms());
+  const addTask = (title, user, date) => {
+    service.newTask(title, user, date).then(() => closeForms());
   };
 
-  const updateTask = (id, title, description, user, date) => {
+  const updateTask = (id, title, user, date) => {
     service
-      .updateTask(id, title, description, user, date)
+      .updateTask(id, title, user, date)
       .then(() => closeForms());
   };
 
-  console.log("Hello");
-
   const updateUserTask = e => {
     e.preventDefault();
-    console.log(e.target.value);
+    setUserTask(e.target.value)
   };
 
   return (
     <div className="edit-task">
       <TextInput state={title} setState={setTitle} type="text" field="title" />
-      <TextInput
-        state={description}
-        setState={setDescription}
-        type="text"
-        field="description"
-      />
       <div className="user-select">
         <label>User:</label>
         <select name="user" onChange={e => updateUserTask(e)}>
           {state.users[0]
-            ? state.users.map(user => <option value={user}>{user.name}</option>)
+            ? state.users.map( (user, i) => <option key={i} value={user.id}>{user.name}</option>)
             : ""}
         </select>
       </div>
@@ -64,7 +55,6 @@ const EditTask = ({ closeForms, task }) => {
             updateTask(
               task.id,
               title,
-              description,
               userTask.id,
               state.selectedDate
             )
@@ -76,7 +66,7 @@ const EditTask = ({ closeForms, task }) => {
         <FontAwesomeIcon
           icon={faTasks}
           onClick={() =>
-            addTask(title, description, userTask.id, state.selectedDate)
+            addTask(title, userTask, dateFns.format(state.selectedDate, "PPP"))
           }
           size="2x"
           color="whitesmoke"

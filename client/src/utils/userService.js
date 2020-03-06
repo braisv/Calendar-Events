@@ -27,13 +27,14 @@ export default class UserService {
 
   removeUser = (id) => {
     return this.service
-      .delete(`/remove/${id}`)
+      .delete(`/removeUser/${id}`)
       .then(response => response.data);
   };
 
   updateUser = (id, name) => {
     return this.service
-      .patch(`/edit/${id}`, {name})
+      .patch(`/editUser/${id}`, {name})
       .then(response => response.data);
   };
+  
 }

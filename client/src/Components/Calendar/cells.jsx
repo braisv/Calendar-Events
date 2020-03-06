@@ -1,8 +1,7 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import * as dateFns from "date-fns";
-import { CalendarContext } from '../CalendarContext';
-import useCalendarHooks from '../../hooks/calendarHooks';
-
+import { CalendarContext } from "../CalendarContext";
+import useCalendarHooks from "../../hooks/calendarHooks";
 
 const Cells = () => {
   const [state] = useContext(CalendarContext);
@@ -21,6 +20,12 @@ const Cells = () => {
     for (let i = 0; i < 7; i++) {
       formattedDate = dateFns.format(day, dateFormat);
       const cloneDay = dateFns.toDate(day);
+      let selectedDay = dateFns.format(cloneDay, "PPP");
+      let taskNumber = 0;
+      state.tasks.filter(task => {
+        if (task.date === selectedDay) taskNumber++;
+      });
+
       days.push(
         <div
           className={`column cell ${
@@ -35,6 +40,9 @@ const Cells = () => {
         >
           <span className="number">{formattedDate}</span>
           <span className="bg">{formattedDate}</span>
+          <span className="task-number">
+            {taskNumber > 0 ? taskNumber : ""}
+          </span>
         </div>
       );
       day = dateFns.addDays(day, 1);

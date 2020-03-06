@@ -22,21 +22,21 @@ export default class TaskService {
       .then(response => response.data);
   };
 
-  newTask = (title, description, user, date) => {
+  newTask = (title, user, date) => {
     return this.service
-      .post(`/newTask`, { title, description, user, date })
+      .post(`/newTask`, { title, user, date })
       .then(response => response.data);
   };
 
   removeTask = (id) => {
     return this.service
-      .delete(`/remove/${id}`)
+      .delete(`/removeTask/${id}`)
       .then(response => response.data);
   };
 
-  updateTask = (id, title, description, user, date) => {
+  updateTask = (id, title, user, date) => {
     return this.service
-      .patch(`/edit/${id}`, {title, description, user, date})
+      .patch(`/editTask/${id}`, {title, user, date})
       .then(response => response.data);
   };
 }

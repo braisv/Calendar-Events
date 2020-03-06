@@ -7,22 +7,23 @@ tasksRouter.get("/data", (req, res, next) => {
   let data = {
     tasks: [],
     users: []
-  }
+  };
   Task.find()
+    .populate("user")
     .then(allTasks => {
-      data.tasks = allTasks
+      data.tasks = allTasks;
 
-      User.find()
-      .then(allUsers => {
-        data.users = allUsers
-        res.json(data)
-      })
+      User.find().then(allUsers => {
+        data.users = allUsers;
+        res.json(data);
+      });
     })
     .catch(err => console.log(err));
 });
 
 tasksRouter.get("/tasks", (req, res, next) => {
   Task.find()
+    .populate("user")
     .then(allTasks => res.json(allTasks))
     .catch(err => console.log(err));
 });
@@ -32,28 +33,35 @@ tasksRouter.post("/newTask", (req, res, next) => {
   Task.create({ title, description, user, date })
     .then(newTask => {
       Task.findById(newTask._id)
-        .then(theNewTask => res.json(theNewTask))
+        .then(theNewTask => {
+          User.findByIdAndUpdate(
+            user,
+            { $push: { tasks: theNewTask } },
+            { new: true }
+          )
+            .then(() => res.json(theNewTask))
+            .catch(err => console.log(err));
+        })
         .catch(error => next(error));
     })
     .catch(error => next(error));
 });
 
-tasksRouter.patch("/edit/:id", (req, res, next) => {
+tasksRouter.patch("/editTask/:id", (req, res, next) => {
   const { title, description, user, date } = req.body;
   const taskID = req.params.id;
-  User.findByIdAndUpdate(
+  Task.findByIdAndUpdate(
     { _id: taskID },
     { $set: { title, description, user, date } },
     { new: true }
   )
-    .then(theUser => res.json(theUser))
+    .then(theTask => res.json(theTask))
     .catch(error => next(error));
 });
 
-tasksRouter.delete("/remove/:id", (req, res, next) => {
+tasksRouter.delete("/removeTask/:id", (req, res, next) => {
   const taskID = req.params.id;
-  task
-    .findByIdAndRemove({ _id: taskID })
+  Task.findByIdAndRemove({ _id: taskID })
     .then(theTask => {
       res.json(theTask);
     })

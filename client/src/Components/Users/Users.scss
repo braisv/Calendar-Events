@@ -61,10 +61,30 @@
   }
 
   .list-item {
-      background: $dark-green;
-      color: white;
-      font-weight: bold;
-      font-size: 1.2rem;
-      padding: 5px 15px;
+    display: flex;
+    flex-direction: column;
+    background: $dark-green;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+    padding: 5px 15px;
+    cursor: pointer;
+
+    .between {
+      width: 100%;
+      justify-content: space-between;
+    }
+  }
+
+  .tasks-user {
+    display: none;
+    color: $green;
+    width: 100%;
+    font-size: 0.8rem;
+    margin-top: 5px;
+
+    li {
+      margin: 0 10px;
+    }
   }
 }
